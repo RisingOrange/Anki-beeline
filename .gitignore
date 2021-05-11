@@ -1,0 +1,10 @@
+.vscode/
+
+build/
+tools/
+ profile/
+
+meta.json
+
+src/*/__pycache__/
+src/*/_vendor

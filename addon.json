@@ -1,0 +1,11 @@
+{
+    "display_name": "waspline",
+    "module_name": "waspline",
+    "repo_name": "Anki-waspline",
+    "ankiweb_id": "1129477042",
+    "author": "RisingOrange",
+    "conflicts": [],
+    "targets": [
+        "anki21"
+    ]
+}
