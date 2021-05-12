@@ -1,5 +1,3 @@
-import re
-
 try:
     from ._vendor.bs4 import BeautifulSoup
 except:
@@ -88,7 +86,7 @@ def wrap_chars(html, rgb_strings):
 
 
 if __name__ == '__main__':
-    with open('foo.txt') as f:
+    with open('input.html') as f:
         result = beeline(f.read())
 
     # print(unbeeline(result))
