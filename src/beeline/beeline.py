@@ -1,6 +1,9 @@
 import re
 
-from ._vendor import bs4
+try:
+    from ._vendor.bs4 import BeautifulSoup
+except:
+    from bs4 import BeautifulSoup
 
 
 def lerp(v0, v1, t):
@@ -19,24 +22,20 @@ def lines(html):
 
 
 def beeline(html):
-    result = ''
-
     COLORS = ["#0000FF", "#FF0000"]
     COLOR_TEXT = "#000000"
     BASE_COLOR = hex_to_rgb(COLOR_TEXT)
     GRADIENT_SIZE = 50
 
+    result = ''
     coloridx = 0
-
     for lineno, line in enumerate(lines(html)):
-        result_line = ''
-
         # Alternate between left and right for every color
         active_color = hex_to_rgb(COLORS[coloridx])
 
         # Color lines using lerp of RGB values
         rgb_strings = []
-        for idx, _ in enumerate(line):
+        for idx, _ in enumerate(remove_html_tags(line)):
             t = 1 - (idx / (len(line) * GRADIENT_SIZE / 50))
             red = lerp(BASE_COLOR[0], active_color[0], t)
             green = lerp(BASE_COLOR[1], active_color[1], t)
@@ -49,28 +48,58 @@ def beeline(html):
         if is_left:
             rgb_strings = list(reversed(rgb_strings))
 
-        for char, rgb_string in zip(line, rgb_strings):
-            result_line += f'<span class="beeline" style="color: {rgb_string};">{char}</span>'
-
         # Increment color index after every left/right pair, and lineno
         # after every line
         if not is_left:
             coloridx = (coloridx + 1) % len(COLORS)
 
-        result += result_line + '<br>'
+        line = wrap_chars(line, rgb_strings)
+        result += str(line) + '<br>'
 
     return result[:len(result) - len('<br>')]
 
 
 def unbeeline(html):
-    return re.sub(r'<span class="beeline".+?>(.)</span>', r'\1', html)
+    soup = BeautifulSoup(html, 'html.parser')
+    for x in soup.find_all('span', {'class': 'beeline'}):
+        x.replace_with(x.text)
+    return str(soup)
+
+
+def remove_html_tags(html):
+    soup = BeautifulSoup(html, features='html.parser')
+    return soup.text
+
+
+def wrap_chars(html, rgb_strings):
+    rgb_strings_iter = iter(rgb_strings)
+    soup = BeautifulSoup(html, features='html.parser')
+    for x in list(soup.strings):
+        topspan = soup.new_tag('span')
+        topspan['class'] = 'beeline'
+        for char in str(x):
+            span = soup.new_tag('span')
+            span.string = str(char)
+            span['style'] = f"color: {next(rgb_strings_iter)}"
+            topspan.append(span)
+        x.replace_with(topspan)
+
+    return str(soup)
 
 
 if __name__ == '__main__':
     with open('foo.txt') as f:
         result = beeline(f.read())
 
-    print(unbeeline(result))
+    # print(unbeeline(result))
 
     with open('result.html', 'w') as f:
         f.write(result)
+
+    # with open('foo.txt') as f:
+    #     html = f.read()
+
+    # print(html)
+    # print(remove_html_tags(html))
+
+    # print(wrap_chars(html))
