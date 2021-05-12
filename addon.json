@@ -1,8 +1,8 @@
 {
-    "display_name": "waspline",
-    "module_name": "waspline",
-    "repo_name": "Anki-waspline",
-    "ankiweb_id": "1129477042",
+    "display_name": "beeline",
+    "module_name": "beeline",
+    "repo_name": "Anki-beeline",
+    "ankiweb_id": "",
     "author": "RisingOrange",
     "conflicts": [],
     "targets": [
