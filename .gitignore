@@ -6,5 +6,4 @@ tools/
 
 meta.json
 
-src/*/__pycache__/
-src/*/_vendor
+*__pycache__/
