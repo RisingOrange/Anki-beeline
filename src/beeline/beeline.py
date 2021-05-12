@@ -1,3 +1,5 @@
+import re
+
 try:
     from ._vendor.bs4 import BeautifulSoup
 except:
@@ -16,7 +18,7 @@ def hex_to_rgb(h):
 
 
 def lines(html):
-    return html.split('<br>')
+    return re.split('<br>|<br/>|<br/ >', html)
 
 
 def beeline(html):
@@ -28,6 +30,9 @@ def beeline(html):
     result = ''
     coloridx = 0
     for lineno, line in enumerate(lines(html)):
+        if not line:
+            continue
+
         # Alternate between left and right for every color
         active_color = hex_to_rgb(COLORS[coloridx])
 
@@ -42,12 +47,11 @@ def beeline(html):
             rgb_strings.append(f'rgb({int(red)},{int(green)},{int(blue)})')
 
         # Flip array around if on left to color correctly
-        is_left = (lineno % 2 == 0)
+        is_left = lineno % 2 == 0
         if is_left:
             rgb_strings = list(reversed(rgb_strings))
 
-        # Increment color index after every left/right pair, and lineno
-        # after every line
+        # Increment color index after every left/right pair
         if not is_left:
             coloridx = (coloridx + 1) % len(COLORS)
 
