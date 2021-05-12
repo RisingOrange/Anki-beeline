@@ -93,15 +93,5 @@ if __name__ == '__main__':
     with open('input.html') as f:
         result = beeline(f.read())
 
-    # print(unbeeline(result))
-
     with open('result.html', 'w') as f:
         f.write(result)
-
-    # with open('foo.txt') as f:
-    #     html = f.read()
-
-    # print(html)
-    # print(remove_html_tags(html))
-
-    # print(wrap_chars(html))
