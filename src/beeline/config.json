@@ -1,5 +1,7 @@
 {
     "fieldsByModel" : {
-        "Basic": ["Front", "Back"]
+        "Basic": ["Front", "Back"],
+        "Basic (and reversed card)": ["Front", "Back"],
+        "Cloze": ["Text"]
     }
 }
