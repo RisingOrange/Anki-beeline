@@ -1,9 +1,6 @@
-# Anki-avgEase
-Anki 2.1 Add-On that iterates through each deck options group in your collection and sets the initial ease factor to the average ease factor of the mature cards (cards with intervals > 90 days) in that deck optons group.
+# Anki-beeline
+Anki 2.1 add-on that adds gradients to text to make it easier to read.
 
-Settings are calibrated each time a profile is loaded (at startup).
-
-See Post: [Anki's Starting Ease Factor Settings](https://eshapard.github.io/anki/ankis-initial-ease-factor-setting.html) for the rationale behind this.
-
+<img src="screenshots/img.png" width="350"> 
 ## Install
-Get it from [Ankiweb](https://ankiweb.net/shared/info/1129477042) or clone this repository to your addons directory.
+Get it from [Ankiweb](https://ankiweb.net/shared/info/1776000188) or clone this repository to your addons directory.
