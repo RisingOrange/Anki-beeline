@@ -1,3 +1,7 @@
+from textwrap import dedent
+
+from PyQt5.QtGui import QTextBlock
+
 from aqt import mw
 from aqt.utils import showInfo
 from PyQt5.QtCore import QEvent, Qt
@@ -48,6 +52,12 @@ class Dialog(QDialog):
         self.lineedit.setClearButtonEnabled(True)
         self.completer = Completer(self.lineedit, mw.col.decks.allNames())
         self.lineedit.setCompleter(self.completer)
+
+        groupbox.layout().addWidget(QLabel(dedent('''\
+            All notes in the selected deck will be changed
+            except for the note that is is currently visible.
+            In this case just click another note and rerun.
+        ''')))
 
         return self.lineedit
 
