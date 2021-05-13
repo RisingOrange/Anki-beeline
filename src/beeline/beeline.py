@@ -5,16 +5,14 @@ try:
 except:
     from bs4 import BeautifulSoup
 
+from ast import literal_eval
+
+from .config import get as cfg
+
 
 def lerp(v0, v1, t):
     # Linear interpolate between v0 and v1 at percent t
     return v0 * (1 - t) + v1 * t
-
-
-def hex_to_rgb(h):
-    # Convert a hex triplet (#XXXXXX) to an array containing red, green, and blue
-    h = h[1:]
-    return tuple(int(h[i:i+2], 16) for i in (0, 2, 4))
 
 
 def lines(html):
@@ -22,10 +20,11 @@ def lines(html):
 
 
 def beeline(html):
-    COLORS = ["#0000FF", "#FF0000"]
-    COLOR_TEXT = "#000000"
-    BASE_COLOR = hex_to_rgb(COLOR_TEXT)
-    GRADIENT_SIZE = 50
+    COLORS = [
+        literal_eval(cfg('gradient_color_1')),
+        literal_eval(cfg('gradient_color_2'))
+    ]
+    BASE_COLOR = literal_eval(cfg('text_color'))
 
     result = ''
     coloridx = 0
@@ -34,12 +33,12 @@ def beeline(html):
             continue
 
         # Alternate between left and right for every color
-        active_color = hex_to_rgb(COLORS[coloridx])
+        active_color = COLORS[coloridx]
 
         # Color lines using lerp of RGB values
         rgb_strings = []
         for idx, _ in enumerate(remove_html_tags(line)):
-            t = 1 - (idx / (len(line) * GRADIENT_SIZE / 50))
+            t = 1 - (idx / (len(line) * cfg('gradient_size') / 50))
             red = lerp(BASE_COLOR[0], active_color[0], t)
             green = lerp(BASE_COLOR[1], active_color[1], t)
             blue = lerp(BASE_COLOR[2], active_color[2], t)

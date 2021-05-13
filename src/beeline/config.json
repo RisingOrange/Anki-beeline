@@ -3,5 +3,9 @@
         "Basic": ["Front", "Back"],
         "Basic (and reversed card)": ["Front", "Back"],
         "Cloze": ["Text"]
-    }
+    },
+    "gradient_size" : 10,
+    "text_color" : "(0, 0, 0)",
+    "gradient_color_1" : "(0, 0, 255)",
+    "gradient_color_2" : "(255, 0, 0)"
 }
