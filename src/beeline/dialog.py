@@ -1,7 +1,5 @@
 from textwrap import dedent
 
-from PyQt5.QtGui import QTextBlock
-
 from aqt import mw
 from aqt.utils import showInfo
 from PyQt5.QtCore import QEvent, Qt

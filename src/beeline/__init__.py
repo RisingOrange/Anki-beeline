@@ -1,4 +1,5 @@
 from anki.hooks import addHook
+
 from .dialog import show_dialog
 
 
