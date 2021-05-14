@@ -30,9 +30,9 @@ def beeline(html, gradient_size, text_color, gradient_colors):
         rgb_strings = []
         for idx, _ in enumerate(remove_html_tags(line)):
             t = 1 - (idx / (len(line) * gradient_size / 50))
-            red = lerp(text_color[0], active_color[0], t)
-            green = lerp(text_color[1], active_color[1], t)
-            blue = lerp(text_color[2], active_color[2], t)
+            red = max(lerp(text_color[0], active_color[0], t), 0)
+            green = max(lerp(text_color[1], active_color[1], t), 0)
+            blue = max(lerp(text_color[2], active_color[2], t), 0)
 
             rgb_strings.append(f'rgb({int(red)},{int(green)},{int(blue)})')
 
