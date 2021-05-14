@@ -7,3 +7,6 @@ tools/
 meta.json
 
 *__pycache__/
+
+src/beeline/input.html
+src/beeline/result.html
