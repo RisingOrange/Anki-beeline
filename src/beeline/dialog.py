@@ -1,3 +1,4 @@
+from ast import literal_eval
 from textwrap import dedent
 
 from aqt import mw
@@ -68,7 +69,16 @@ class Dialog(QDialog):
             for field in cfg('fields_by_model').get(note.model()['name'], []):
                 if 'class="beeline"' in note[field]:
                     continue
-                note[field] = beeline.beeline(note[field])
+
+                note[field] = beeline.beeline(
+                    note[field],
+                    cfg('gradient_size'),
+                    literal_eval(cfg('text_color')),
+                    [
+                        literal_eval(cfg('gradient_color_1')),
+                        literal_eval(cfg('gradient_color_2'))
+                    ]
+                )
 
             note.flush()
 

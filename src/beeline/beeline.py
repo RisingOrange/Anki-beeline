@@ -3,11 +3,8 @@ import re
 try:
     from ._vendor.bs4 import BeautifulSoup
 except:
+    # for standalone execution of this file
     from bs4 import BeautifulSoup
-
-from ast import literal_eval
-
-from .config import get as cfg
 
 
 def lerp(v0, v1, t):
@@ -19,40 +16,34 @@ def lines(html):
     return re.split('<br>|<br/>|<br/ >', html)
 
 
-def beeline(html):
-    COLORS = [
-        literal_eval(cfg('gradient_color_1')),
-        literal_eval(cfg('gradient_color_2'))
-    ]
-    BASE_COLOR = literal_eval(cfg('text_color'))
-
+def beeline(html, gradient_size, text_color, gradient_colors):
     result = ''
-    coloridx = 0
-    for lineno, line in enumerate(lines(html)):
+    color_idx = 0
+    for line_idx, line in enumerate(lines(html)):
         if not line:
             continue
 
         # Alternate between left and right for every color
-        active_color = COLORS[coloridx]
+        active_color = gradient_colors[color_idx]
 
         # Color lines using lerp of RGB values
         rgb_strings = []
         for idx, _ in enumerate(remove_html_tags(line)):
-            t = 1 - (idx / (len(line) * cfg('gradient_size') / 50))
-            red = lerp(BASE_COLOR[0], active_color[0], t)
-            green = lerp(BASE_COLOR[1], active_color[1], t)
-            blue = lerp(BASE_COLOR[2], active_color[2], t)
+            t = 1 - (idx / (len(line) * gradient_size / 50))
+            red = lerp(text_color[0], active_color[0], t)
+            green = lerp(text_color[1], active_color[1], t)
+            blue = lerp(text_color[2], active_color[2], t)
 
             rgb_strings.append(f'rgb({int(red)},{int(green)},{int(blue)})')
 
         # Flip array around if on left to color correctly
-        is_left = lineno % 2 == 0
+        is_left = line_idx % 2 == 0
         if is_left:
             rgb_strings = list(reversed(rgb_strings))
 
         # Increment color index after every left/right pair
         if not is_left:
-            coloridx = (coloridx + 1) % len(COLORS)
+            color_idx = (color_idx + 1) % len(gradient_colors)
 
         line = wrap_chars(line, rgb_strings)
         result += str(line) + '<br>'
@@ -90,7 +81,7 @@ def wrap_chars(html, rgb_strings):
 
 if __name__ == '__main__':
     with open('input.html') as f:
-        result = beeline(f.read())
+        result = beeline(f.read(), 10, (0, 0, 0), [(255, 0, 0), (0, 0, 255)])
 
     with open('result.html', 'w') as f:
         f.write(result)
