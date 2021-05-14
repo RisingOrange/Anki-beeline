@@ -67,7 +67,7 @@ class Dialog(QDialog):
 
         notes = get_notes(f'"deck:{self.lineedit.text()}"')
         for note in notes:
-            for field in cfg('fieldsByModel').get(note.model()['name'], []):
+            for field in cfg('fields_by_model').get(note.model()['name'], []):
                 if 'class="beeline"' in note[field]:
                     continue
                 note[field] = beeline.beeline(note[field])
@@ -80,7 +80,7 @@ class Dialog(QDialog):
 
         notes = get_notes(f'"deck:{self.lineedit.text()}"')
         for note in notes:
-            for field in cfg('fieldsByModel').get(note.model()['name'], []):
+            for field in cfg('fields_by_model').get(note.model()['name'], []):
                 note[field] = beeline.unbeeline(note[field])
 
             note.flush()

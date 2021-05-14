@@ -1,5 +1,5 @@
 {
-    "fieldsByModel" : {
+    "fields_by_model" : {
         "Basic": ["Front", "Back"],
         "Basic (and reversed card)": ["Front", "Back"],
         "Cloze": ["Text"]
