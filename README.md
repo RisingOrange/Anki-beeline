@@ -1,5 +1,6 @@
 # Anki-beeline
 Anki 2.1 add-on that adds gradients to text to make it easier to read.
+[Beeline reader (Wikipedia)](https://en.wikipedia.org/wiki/Beeline_reader)
 
 ![](screenshots/img.png)
 ## Install
